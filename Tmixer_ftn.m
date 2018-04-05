@@ -5,7 +5,7 @@ Ts = Y(2);
 I = Y(3);
 
 % Define constants for problem 
-tauS = 12.39; % s 
+tauS = 3.2; % s 
 V = 1.75; % L
 T1 = 62.1; % degF
 T2 = 145.8; % degF

@@ -4,30 +4,31 @@
 close all
 
 % Initial conditions for PID control
-tspan = [0 300]; %s
-c0 = 0.015; %L/s
+tspan = [0 200]; %s
+c0 = 0.01536; %L/s
 Y0 = [130;130;0]; % I.C. for both T and Ts is 130degF, I.C. for I is zero
 
 ftnhand = @Tmixer_ftn;
 
-% Define PID Parameters for Controlled Run #1
-Kc = -0.0168; % L/s*degF
-tauI = 10; % s
-tauD = 0.5; % s 
+% Define PID Parameters
+Kc = -0.02762; % L/s*degF
+tauI = 1; % s
+tauD = 10; % s 
 
-[t,Y] = ode45(ftnhand,tspan,Y0,[],c0,Kc,tauI,tauD);
+[t,Y] = ode15s(ftnhand,tspan,Y0,[],c0,Kc,tauI,tauD);
 
 Ts1 = Y(:,2);
-
 
 figure 
 plot(t,Ts1,'r','Linewidth',2)
 hold on
 plot([t(1) t(end)],120*[1 1],': k','Linewidth',2) % setpoint
-
+title('Thermal Mixer - Controlled Run 2')
 xlabel('Time (s)')
-ylabel('Sensor Reading (degF)')
-
+ylabel(' Temperature Sensor Reading (\circF)')
+dim = [.45 .6 .3 .3];
+str = 'K_{c} = -0.02762 L/s\circF, \tau_{I} = 1s, \tau_{D} = 10s';
+annotation('textbox',dim,'String',str,'FitBoxToText','on');
 % Now we plot the outlet flow rate as a function of time to ensure our
 % system is behaving as expected
 %figure 
